@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const AirBnBSchema = new mongoose.Schema({
+    _id: { type: String, required: true },
     listing_url: { type: String, required: true },
     name: { type: String, required: true },
     summary: { type: String },
@@ -15,8 +16,8 @@ const AirBnBSchema = new mongoose.Schema({
     property_type: { type: String },
     room_type: { type: String },
     bed_type: { type: String },
-    minimum_nights: { type: Number },
-    maximum_nights: { type: Number },
+    minimum_nights: { type: String },
+    maximum_nights: { type: String },
     cancellation_policy: { type: String },
     last_scraped: { type: Date },
     calendar_last_scraped: { type: Date },
