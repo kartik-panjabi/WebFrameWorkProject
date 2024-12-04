@@ -1,1 +1,121 @@
-[]
+[
+    {
+      "images": {
+        "thumbnail_url": "",
+        "medium_url": "",
+        "picture_url": "https://a0.muscache.com/im/pictures/40ace1e3-4917-46e5-994f-30a5965f5159.jpg?aki_policy=large",
+        "xl_picture_url": ""
+      },
+      "host": {
+        "host_id": "47554473",
+        "host_url": "https://www.airbnb.com/users/show/47554473",
+        "host_name": "Mae",
+        "host_location": "US",
+        "host_about": "",
+        "host_response_time": "within a few hours",
+        "host_thumbnail_url": "https://a0.muscache.com/im/pictures/c680ce22-d6ec-4b00-8ef3-b5b7fc0d76f2.jpg?aki_policy=profile_small",
+        "host_picture_url": "https://a0.muscache.com/im/pictures/c680ce22-d6ec-4b00-8ef3-b5b7fc0d76f2.jpg?aki_policy=profile_x_medium",
+        "host_neighbourhood": "Greenpoint",
+        "host_response_rate": 100,
+        "host_is_superhost": false,
+        "host_has_profile_pic": true,
+        "host_identity_verified": false,
+        "host_listings_count": 13,
+        "host_total_listings_count": 13,
+        "host_verifications": [
+          "email",
+          "phone",
+          "google",
+          "reviews",
+          "jumio",
+          "government_id"
+        ]
+      },
+      "address": {
+        "location": {
+          "type": "Point",
+          "coordinates": [
+            -73.94472,
+            40.72778
+          ],
+          "is_location_exact": true
+        },
+        "street": "Brooklyn, NY, United States",
+        "suburb": "Greenpoint",
+        "government_area": "Greenpoint",
+        "market": "New York",
+        "country": "United States",
+        "country_code": "US"
+      },
+      "availability": {
+        "availability_30": 30,
+        "availability_60": 31,
+        "availability_90": 31,
+        "availability_365": 243
+      },
+      "review_scores": {
+        "review_scores_accuracy": 9,
+        "review_scores_cleanliness": 10,
+        "review_scores_checkin": 10,
+        "review_scores_communication": 8,
+        "review_scores_location": 9,
+        "review_scores_value": 9,
+        "review_scores_rating": 88
+      },
+      "_id": "10057826",
+      "listing_url": "https://www.airbnb.com/rooms/10057826",
+      "name": "Deluxe Loft Suite",
+      "summary": "Loft Suite Deluxe @ Henry Norman Hotel Located in Greenpoint, Brooklyn and housed in a converted 19th-century warehouse, the Henry Norman Hotel features modern lofts and suites with hardwood floors, antiques and contemporary art.",
+      "space": "This loft unit features a kitchenette and is fully equipped with everything you need for your stay. The Loft Suite Deluxe has an alcove bedroom area with a Queen size bed and a comfortable pull-out sofa in the living room area, which in total can easily sleep up to 4 guests. The loft is equipped with 42\" LCD HD TVs in both the living and bedroom areas with premium cable channels (HBO, Showtime & more). There are hardwood floors throughout and a full bathroom with shower/tub combination. Sleeps up to 4 guests.",
+      "description": "Loft Suite Deluxe @ Henry Norman Hotel Located in Greenpoint, Brooklyn and housed in a converted 19th-century warehouse, the Henry Norman Hotel features modern lofts and suites with hardwood floors, antiques and contemporary art. This loft unit features a kitchenette and is fully equipped with everything you need for your stay. The Loft Suite Deluxe has an alcove bedroom area with a Queen size bed and a comfortable pull-out sofa in the living room area, which in total can easily sleep up to 4 guests. The loft is equipped with 42\" LCD HD TVs in both the living and bedroom areas with premium cable channels (HBO, Showtime & more). There are hardwood floors throughout and a full bathroom with shower/tub combination. Sleeps up to 4 guests. Guest will have access to common terraces, lounge area, business center with 2 iMac computers, fitness center with dry sauna and steam shower, and laundry room. Greenpoint is an artsy Brooklyn neighborhood filled with great restaurants, cafes, and shops.",
+      "neighborhood_overview": "Greenpoint is an artsy Brooklyn neighborhood filled with great restaurants, cafes, and shops.",
+      "notes": "",
+      "transit": "",
+      "access": "Guest will have access to common terraces, lounge area, business center with 2 iMac computers, fitness center with dry sauna and steam shower, and laundry room.",
+      "interaction": "",
+      "house_rules": "Guest must leave a copy of credit card with front desk for any incidentals/ damages with a copy of valid ID. There are no additional charges than what has been paid in advance.",
+      "property_type": "Apartment",
+      "room_type": "Entire home/apt",
+      "bed_type": "Real Bed",
+      "minimum_nights": "3",
+      "maximum_nights": "1125",
+      "cancellation_policy": "strict_14_with_grace_period",
+      "last_scraped": "2019-03-07T05:00:00.000Z",
+      "calendar_last_scraped": "2019-03-07T05:00:00.000Z",
+      "first_review": "2016-01-03T05:00:00.000Z",
+      "last_review": "2018-02-18T05:00:00.000Z",
+      "accommodates": 4,
+      "bedrooms": 0,
+      "beds": 2,
+      "number_of_reviews": 5,
+      "bathrooms": 1,
+      "amenities": [
+        "TV",
+        "Cable TV",
+        "Internet",
+        "Wifi",
+        "Air conditioning",
+        "Kitchen",
+        "Doorman",
+        "Gym",
+        "Elevator",
+        "Heating",
+        "Family/kid friendly",
+        "Washer",
+        "Dryer",
+        "Smoke detector",
+        "Carbon monoxide detector",
+        "First aid kit",
+        "Fire extinguisher",
+        "Essentials",
+        "Shampoo",
+        "24-hour check-in",
+        "Hangers",
+        "Hair dryer",
+        "Iron"
+      ],
+      "price": 205,
+      "extra_people": 0,
+      "guests_included": 1
+    }
+  ]
