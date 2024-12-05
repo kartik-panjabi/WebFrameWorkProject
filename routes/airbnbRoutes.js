@@ -7,8 +7,6 @@ const router = express.Router();
 
 
 //////////////////////////////////NEW ROUTES FOR UI///////////////////////////////////////////
-// Login Page Route
-
 
 
 // Route to serve the form
@@ -56,7 +54,7 @@ router.post('/search', async (req, res) => {
 
 // Route to render Airbnb details
 // Add this route in airbnbRoutes.js
-router.get('/detail/:id', protect, async (req, res) => {
+router.get('/detail/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -93,9 +91,48 @@ router.get('/edit/:id', async (req, res) => {
     res.status(500).send('Error fetching Airbnb details: ' + error.message);
   }
 });
+
+// POST /api/AirBnBs/edit/:id - Update an AirBnB by ID
 /////////////////////////////////////////////////////////////////////////////
+// POST /api/AirBnBs/edit/:id - Handle form submission and call the PUT route
+router.post('/edit/:id', async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+
+  try {
+    // Call the PUT logic to update the Airbnb
+    console.log('Updating Airbnb with ID:', id);
+    console.log('New data:', data);
+    const updatedAirbnb = await db.updateAirBnBById(data, id);
+
+    if (updatedAirbnb) {
+      // Redirect back to the listings page or success page
+      res.redirect('/search?message=AirBnB updated successfully&page=1&perPage=5'); // Adjust the path as needed
+    } else {
+      res.status(404).send('AirBnB not found');
+    }
+  } catch (error) {
+    console.error('Error updating Airbnb:', error.message);
+    res.status(500).send('Error updating Airbnb: ' + error.message);
+  }
+});
 
 
+// DELETE /api/AirBnBs/delete/:id - Delete an AirBnB by ID Post request
+router.post('/delete/:id', async (req, res) => {
+  
+  const { id } = req.params;
+  try {
+    const deletedAirbnb = await db.deleteAirBnBById(id);
+    if (deletedAirbnb) {
+      res.status(200).json({ message: 'AirBnB deleted successfully' });
+    } else {
+      res.status(404).json({ message: 'AirBnB not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting AirBnB', error });
+  } 
+});
 
 
 // POST /api/AirBnBs - Add a new AirBnB

@@ -5,10 +5,15 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const airbnbRoutes = require('./routes/airbnbRoutes');
 const db = require('./services/dbService');
+// Middleware to verify JWT token
+const verifyToken = require('./middlewares/veifyToken');
 const path = require('path');
 const userRoutes = require('./routes/authRoutes');
-
+const multer = require('multer');
+const upload = multer();
 const app = express();
+
+app.use(upload.none()); 
 
 // Middleware to parse URL-encoded data (form submissions)
 app.use(express.urlencoded({ extended: true }));
@@ -27,6 +32,14 @@ app.use('/api/AirBnBs', airbnbRoutes);
 
 app.use('/api/users', userRoutes);
 
+
+
+
+app.get('/protected-route', verifyToken, (req, res) => {
+    res.json({ message: 'Access granted to protected route', user: req.user });
+});
+
+
 // Initialize the MongoDB connection
 const connectionString = process.env.MONGODB_URI;  // Load from .env file
 db.initialize(connectionString).then(() => {
@@ -34,3 +47,4 @@ db.initialize(connectionString).then(() => {
     console.log(`Server is running on http://localhost:${process.env.PORT || 8800}`      );
   });
 });
+//wedk

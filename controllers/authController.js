@@ -62,7 +62,17 @@ const loginUser = async (req, res) => {
         );
         console.log('Generated JWT:', token);
 
+
         // Send token back to the client
+          // Option 1: Send as a cookie (more secure)
+          res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+            sameSite: 'Strict',
+        });
+
+        // Redirect to protected route
+        res.redirect('/dashboard');
         res.json({ token });
     } catch (err) {
         console.error('Error logging in user:', err.message);

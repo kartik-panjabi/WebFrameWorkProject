@@ -8,7 +8,7 @@
 </head>
 <body>
   <h1>Edit Airbnb Listing</h1>
-  <form action="/api/AirBnBs/<%= airbnb._id %>" method="PUT" class="formEdit" enctype="multipart/form-data">
+  <form action="/api/AirBnBs/edit/<%= airbnb._id %>" method="POST" class="formEdit">
     <div class="form-group">
       <label for="listing_url">Listing URL:</label>
       <input type="url" id="listing_url" name="listing_url" value="<%= airbnb.listing_url %>" required>
