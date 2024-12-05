@@ -1,7 +1,102 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const { protect } = require('../middlewares/authMiddleware');
 const db = require('../services/dbService'); // Ensure dbService is correctly implemented
 const router = express.Router();
+
+
+
+//////////////////////////////////NEW ROUTES FOR UI///////////////////////////////////////////
+// Login Page Route
+
+
+
+// Route to serve the form
+router.get('/search', (req, res) => {
+  const { page = 1, perPage = 5, minimum_nights = 2} = req.query;  // Use query parameters if provided, otherwise set defaults
+
+  // Render the form with page and perPage passed as variables
+  res.render('airbnbSearch', { page, perPage, minimum_nights });  // Pass both to the template
+});
+
+// POST /api/AirBnBs/search - Search AirBnBs with form data and display the result
+router.post('/search', async (req, res) => {
+  const { page = 1, perPage = 5, minimum_nights } = req.body;
+
+  // Validate and parse the parameters
+  const pageNum = parseInt(page, 10);
+  const perPageNum = parseInt(perPage, 10);
+
+  if (isNaN(pageNum) || isNaN(perPageNum) || pageNum < 1 || perPageNum < 1) {
+      return res.status(400).json({ message: 'Invalid pagination parameters' });
+  }
+
+  // Initialize the filter for minimum_nights
+  const filter = {};
+  if (minimum_nights) {
+      filter.minimum_nights = { $gte: parseInt(minimum_nights, 10) };
+  }
+
+  try {
+      // Retrieve filtered AirBnBs from the database
+      const airbnbs = await db.getAllAirBnBs(pageNum, perPageNum, filter);
+
+      // Render the results using ejs template and pass the variables
+      res.render('airbnbResult', { 
+        airbnbs, 
+        page: pageNum, 
+        perPage: perPageNum, 
+        minimum_nights: minimum_nights,
+        message: req.query.message
+    });
+  } catch (error) {
+      res.status(500).json({ message: 'Error fetching AirBnBs', error });
+  }
+});
+
+// Route to render Airbnb details
+// Add this route in airbnbRoutes.js
+router.get('/detail/:id', protect, async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Fetch the Airbnb listing by its ID
+    const airbnb = await db.getAirBnBById(id);
+
+    if (airbnb) {
+      // Render the details page with the Airbnb data
+      res.render('airbnbDetails', { airbnb });
+    } else {
+      res.status(404).send('Airbnb listing not found');
+    }
+  } catch (error) {
+    res.status(500).send('Error fetching Airbnb details: ' + error.message);
+  }
+  
+});
+
+// GET /api/AirBnBs/edit/:id - Render the edit form for an AirBnB by ID
+router.get('/edit/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    // Fetch the existing Airbnb details by ID
+    const airbnb = await db.getAirBnBById(id);
+
+    if (airbnb) {
+      // Render the edit form with the existing data
+      res.render('editAirbnb', { airbnb });
+    } else {
+      res.status(404).send('Airbnb listing not found');
+    }
+  } catch (error) {
+    res.status(500).send('Error fetching Airbnb details: ' + error.message);
+  }
+});
+/////////////////////////////////////////////////////////////////////////////
+
+
+
 
 // POST /api/AirBnBs - Add a new AirBnB
 router.post('/', async (req, res) => {
@@ -18,6 +113,7 @@ res.set("Content-Type", "application/json");
 
 // GET /api/AirBnBs - List AirBnBs with pagination and filtering
 // GET /api/AirBnBs - List AirBnBs with pagination and filtering
+
 router.get('/', async (req, res) => {
     const { page = 1, perPage = 5, minimum_nights } = req.query;
   

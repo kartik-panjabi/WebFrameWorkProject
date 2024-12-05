@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results</title>
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+  <h1>Showing results for Page <%= page %>, Per Page <%= perPage %>, Minimum Nights <%= minimum_nights %></h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Room Type</th>
+        <th>Address</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>More Information</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (airbnbs.length > 0) { %>
+        <% airbnbs.forEach(airbnb => { %>
+          <tr>
+            <td><%= airbnb.name %></td>
+            <td><%= airbnb.room_type %></td>
+            <td>
+                <% if (airbnb.address) { %>
+                  <p><strong>Street:</strong> <%= airbnb.address.street || 'N/A' %></p>
+                  <p><strong>Area:</strong> <%= airbnb.address.government_area || 'N/A' %></p>
+                  <p><strong>Market:</strong> <%= airbnb.address.market || 'N/A' %></p>
+                  <p><strong>Country:</strong> <%= airbnb.address.country || 'N/A' %></p>
+                <% } else { %>
+                  <span>No Address Available</span>
+                <% } %>
+            </td>
+            <td><%= airbnb.summary %></td>
+            <td>$<%= airbnb.price %></td>
+            <td>
+                <a href="/api/AirBnBs/detail/<%= airbnb._id %>">View Details</a>
+              </td>
+            <td>
+              <!-- Action buttons: Edit and Delete -->
+              <form action="/api/AirBnBs/edit/<%= airbnb._id %>" method="GET" style="display:inline;">
+                <button class="action-button edit-button">Edit</button>
+              </form>        
+              <form action="/api/AirBnBs/<%= airbnb._id %>?_method=DELETE" method="POST" style="display:inline;">
+                <button type="submit" class="action-button delete-button" onclick="return confirm('Are you sure you want to delete this listing?');">Delete</button>
+              </form>
+              
+            </td>
+          </tr>
+        <% }); %>
+      <% } else { %>
+        <tr>
+          <td colspan="17">No results found.</td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+
+  <!-- Go Back Button -->
+  <button onclick="window.history.back()">Go Back</button>
+</body>
+</html>

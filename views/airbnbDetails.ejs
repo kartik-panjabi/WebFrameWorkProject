@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= airbnb.name %> - Details</title>
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+  <header>
+    <h1><%= airbnb.name %></h1>
+    <a href="<%= airbnb.listing_url %>" target="_blank">View Listing</a>
+  </header>
+
+  <section>
+    <% if (airbnb.images && (airbnb.images.picture_url || airbnb.images.thumbnail_url || airbnb.images.medium_url || airbnb.images.xl_picture_url)) { %>
+      <h2>Images</h2>
+      <div class="image-gallery">
+        <% if (airbnb.images.picture_url) { %>
+          <img src="<%= airbnb.images.picture_url %>" alt="Main Picture">
+        <% } %>
+        <% if (airbnb.images.thumbnail_url) { %>
+          <img src="<%= airbnb.images.thumbnail_url %>" alt="Thumbnail">
+        <% } %>
+        <% if (airbnb.images.medium_url) { %>
+          <img src="<%= airbnb.images.medium_url %>" alt="Medium">
+        <% } %>
+        <% if (airbnb.images.xl_picture_url) { %>
+          <img src="<%= airbnb.images.xl_picture_url %>" alt="Extra Large">
+        <% } %>
+      </div>
+    <% } %>
+  </section>
+
+  <section class="details-container">
+    <div class="property-details">
+      <h2>Property Details</h2>
+      <p><strong>Property Type:</strong> <%= airbnb.property_type || 'N/A' %></p>
+      <p><strong>Room Type:</strong> <%= airbnb.room_type || 'N/A' %></p>
+      <p><strong>Bed Type:</strong> <%= airbnb.bed_type || 'N/A' %></p>
+      <p><strong>Minimum Nights:</strong> <%= airbnb.minimum_nights || 'N/A' %></p>
+      <p><strong>Maximum Nights:</strong> <%= airbnb.maximum_nights || 'N/A' %></p>
+      <p><strong>Price:</strong> $<%= airbnb.price || 0 %></p>
+    </div>
+  
+    <div class="address-details">
+      <h2>Address</h2>
+      <% if (airbnb.address) { %>
+        <p><strong>Street:</strong> <%= airbnb.address.street || 'N/A' %></p>
+        <p><strong>Area:</strong> <%= airbnb.address.government_area || 'N/A' %></p>
+        <p><strong>Market:</strong> <%= airbnb.address.market || 'N/A' %></p>
+        <p><strong>Country:</strong> <%= airbnb.address.country || 'N/A' %></p>
+      <% } else { %>
+        <p>No address information available.</p>
+      <% } %>
+    </div>
+  
+    <div class="availability-details">
+      <h2>Availability</h2>
+      <% if (airbnb.availability) { %>
+        <p><strong>Available Next 30 Days:</strong> <%= airbnb.availability.availability_30 || 0 %></p>
+        <p><strong>Available Next 365 Days:</strong> <%= airbnb.availability.availability_365 || 0 %></p>
+      <% } else { %>
+        <p>No availability information available.</p>
+      <% } %>
+    </div>
+  
+    <div class="review-scores">
+      <h2>Review Scores</h2>
+      <% if (airbnb.review_scores) { %>
+        <p><strong>Cleanliness:</strong> <%= airbnb.review_scores.review_scores_cleanliness || 'N/A' %></p>
+        <p><strong>Accuracy:</strong> <%= airbnb.review_scores.review_scores_accuracy || 'N/A' %></p>
+        <p><strong>Communication:</strong> <%= airbnb.review_scores.review_scores_communication || 'N/A' %></p>
+      <% } else { %>
+        <p>No review scores available.</p>
+      <% } %>
+    </div>
+  </section>
+  
+  
+  <section>
+    <h2>Basic Information</h2>
+    <p><strong>Summary:</strong> <%= airbnb.summary || 'N/A' %></p>
+    <p><strong>Space:</strong> <%= airbnb.space || 'N/A' %></p>
+    <p><strong>Description:</strong> <%= airbnb.description || 'N/A' %></p>
+    <p><strong>Neighborhood Overview:</strong> <%= airbnb.neighborhood_overview || 'N/A' %></p>
+    <p><strong>Notes:</strong> <%= airbnb.notes || 'N/A' %></p>
+    <p><strong>Transit:</strong> <%= airbnb.transit || 'N/A' %></p>
+    <p><strong>Access:</strong> <%= airbnb.access || 'N/A' %></p>
+    <p><strong>Interaction:</strong> <%= airbnb.interaction || 'N/A' %></p>
+    <p><strong>House Rules:</strong> <%= airbnb.house_rules || 'N/A' %></p>
+  </section>
+
+  <section>
+    <h2>Host Information</h2>
+    <% if (airbnb.host) { %>
+      <p><strong>Host Name:</strong> <%= airbnb.host.host_name || 'N/A' %></p>
+      <p><strong>Superhost:</strong> <%= airbnb.host.host_is_superhost ? 'Yes' : 'No' %></p>
+      <p><strong>About Host:</strong> <%= airbnb.host.host_about || 'N/A' %></p>
+      <p><strong>Host Response Time:</strong> <%= airbnb.host.host_response_time || 'N/A' %></p>
+      <p><strong>Host Verifications:</strong> <%= airbnb.host.host_verifications.join(', ') || 'N/A' %></p>
+    <% } else { %>
+      <p>No host information available.</p>
+    <% } %>
+  </section>
+
+  <footer>
+    <button onclick="window.history.back()">Go Back</button>
+  </footer>
+</body>
+</html>

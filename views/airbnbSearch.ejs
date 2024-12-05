@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search AirBnBs</title>
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <form action="/api/AirBnBs/search" method="POST" class="formSearch">
+        <h1>Search AirBnB</h1>
+        <label for="page">Page:</label>
+        <input type="number" name="page" value="<%= page %>" required>
+    
+        <label for="perPage">Per Page:</label>
+        <input type="number" name="perPage" value="<%= perPage %>" required>
+    
+        <label for="minimum_nights">Minimum Nights:</label>
+        <input type="text" name="minimum_nights" value="<%= minimum_nights %>" required/>
+    
+        <button type="submit">Search</button>
+    </form>
+    
+  
+  </body>
+</html>
