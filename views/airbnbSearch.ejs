@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
+  <%- include('partials/header') %>
     <form action="/api/AirBnBs/search" method="POST" class="formSearch">
         <h1>Search AirBnB</h1>
         <label for="page">Page:</label>
@@ -23,4 +24,6 @@
     
   
   </body>
+
+  <?- include('partials/footer') ?>
 </html>

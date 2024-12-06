@@ -7,12 +7,13 @@
   <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-  <header>
+  <!-- Header with image logo -->
+  <%- include('partials/header') %>
+
+  <!-- Page content -->
+  <section>
     <h1><%= airbnb.name %></h1>
     <a href="<%= airbnb.listing_url %>" target="_blank">View Listing</a>
-  </header>
-
-  <section>
     <% if (airbnb.images && (airbnb.images.picture_url || airbnb.images.thumbnail_url || airbnb.images.medium_url || airbnb.images.xl_picture_url)) { %>
       <h2>Images</h2>
       <div class="image-gallery">
@@ -104,8 +105,9 @@
     <% } %>
   </section>
 
-  <footer>
     <button onclick="window.history.back()">Go Back</button>
-  </footer>
+    
+<!-- Footer with Team Name -->
+<<? include('partials/footer') ?>
 </body>
 </html>

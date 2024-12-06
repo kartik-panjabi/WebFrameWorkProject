@@ -51,7 +51,7 @@ const loginUser = async (req, res) => {
 
         if (!isMatch) {
             console.warn('Password did not match');
-            return res.status(400).json({ message: 'Invalid credentials' });
+            return res.status(400).redirect('./',{ message: 'Invalid credentials' });
         }
 
         // Generate JWT token
@@ -72,11 +72,11 @@ const loginUser = async (req, res) => {
         });
 
         // Redirect to protected route
-        res.redirect('/dashboard');
-        res.json({ token });
+        res.redirect('/', { message: 'Login successful' });
+       
     } catch (err) {
         console.error('Error logging in user:', err.message);
-        res.status(500).json({ message: 'Error logging in user', error: err });
+        res.redirect('/error', { message: 'Error logging in user' });
     }
 };
 

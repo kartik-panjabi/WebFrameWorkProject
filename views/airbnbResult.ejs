@@ -7,62 +7,59 @@
   <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
-  <h1>Showing results for Page <%= page %>, Per Page <%= perPage %>, Minimum Nights <%= minimum_nights %></h1>
+  <!-- Header with image logo -->
+  <%- include('partials/header') %>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Room Type</th>
-        <th>Address</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>More Information</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
+  <!-- Page content -->
+   <div class="formResult">
+    <h1>Showing results for Page <%= page %>, Per Page <%= perPage %>, Minimum Nights <%= minimum_nights %></h1>
+
+    <div class="results-container">
       <% if (airbnbs.length > 0) { %>
         <% airbnbs.forEach(airbnb => { %>
-          <tr>
-            <td><%= airbnb.name %></td>
-            <td><%= airbnb.room_type %></td>
-            <td>
+          <div class="airbnb-card">
+            <div class="airbnb-image">
+              <img 
+              src="<%= airbnb.images.picture_url || '/images/image_default.jpg' %>" 
+              alt="Image not found" 
+              onerror="this.src='/images/image_default.jpg'; this.onerror=null;"
+            />
+            </div>
+            <div class="airbnb-info">
+              <h2><%= airbnb.name %></h2>
+              <p><strong>Room Type:</strong> <%= airbnb.room_type %></p>
+              <div class="address">
                 <% if (airbnb.address) { %>
-                  <p><strong>Street:</strong> <%= airbnb.address.street || 'N/A' %></p>
-                  <p><strong>Area:</strong> <%= airbnb.address.government_area || 'N/A' %></p>
-                  <p><strong>Market:</strong> <%= airbnb.address.market || 'N/A' %></p>
-                  <p><strong>Country:</strong> <%= airbnb.address.country || 'N/A' %></p>
+                  <p><strong>Address:</strong> <%= airbnb.address.street || 'N/A' %></p>
                 <% } else { %>
                   <span>No Address Available</span>
                 <% } %>
-            </td>
-            <td><%= airbnb.summary %></td>
-            <td>$<%= airbnb.price %></td>
-            <td>
-                <a href="/api/AirBnBs/detail/<%= airbnb._id %>">View Details</a>
-              </td>
-            <td>
+              </div>
+              <p><strong>Price:</strong> $<%= airbnb.price %></p>
+              <a href="/api/AirBnBs/detail/<%= airbnb._id %>">View Details</a>
+            </div>
+            <div class="actions">
               <!-- Action buttons: Edit and Delete -->
               <form action="/api/AirBnBs/edit/<%= airbnb._id %>" method="GET" style="display:inline;">
                 <button class="action-button edit-button">Edit</button>
               </form>        
-              <form action="/api/AirBnBs/delete/<%= airbnb._id %>" method="POST" style="display:inline;">
+              <form action="/api/AirBnBs/<%= airbnb._id %>?_method=DELETE" method="POST" style="display:inline;">
                 <button type="submit" class="action-button delete-button" onclick="return confirm('Are you sure you want to delete this listing?');">Delete</button>
               </form>
-              
-            </td>
-          </tr>
+            </div>
+          </div>
         <% }); %>
       <% } else { %>
-        <tr>
-          <td colspan="17">No results found.</td>
-        </tr>
+        <div class="no-results">
+          <p>No results found.</p>
+        </div>
       <% } %>
-    </tbody>
-  </table>
-
-  <!-- Go Back Button -->
-  <button onclick="window.history.back()">Go Back</button>
+    </div>
+    <!-- Go Back Button -->
+    <button onclick="window.history.back()">Go Back</button>
+   </div>
+  
+<!-- Footer with Team Name -->
+<% include('partials/footer') %>
 </body>
 </html>

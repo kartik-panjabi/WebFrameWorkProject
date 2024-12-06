@@ -32,9 +32,17 @@ app.use('/api/AirBnBs', airbnbRoutes);
 
 app.use('/api/users', userRoutes);
 
+app.get('/', (req, res) => {
+  res.render('mainScreen');
+});
+
+// error route page with any wrong route
+app.get('*', (req, res) => {
+  res.render('error');
+});
 
 
-
+// just for checking protected route authentication
 app.get('/protected-route', verifyToken, (req, res) => {
     res.json({ message: 'Access granted to protected route', user: req.user });
 });
