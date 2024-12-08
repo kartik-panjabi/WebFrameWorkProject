@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
+
+  <%- include('partials/header') %>
+
   <div class="register-container">
     <h1>Create an Account</h1>
     <form action="/api/users/register" method="POST" class="register-form">
@@ -30,5 +33,7 @@
       </div>
     </form>
   </div>
+
+  <%- include ('partials/footer') %>
 </body>
 </html>

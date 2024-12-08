@@ -8,10 +8,20 @@
 </head>
 <body>
 
+  <%- include('partials/header') %>
   <div class="error-container">
     <h1>Error!</h1>
-    <p>Something went wrong. Please try again later or go back to the <a href="/">home page</a>.</p>
+    <p><%= message %></p>
+    <div class="button-container">
+    
+      <!-- Home Page Button -->
+      <button onclick="window.location.href='/'" class="btn">Home</button>
+      <button onclick="window.history.back()" class="btn">Go Back</button>
+      
+    </div>
+    
   </div>
 
+  <%- include ('partials/footer') %>
 </body>
 </html>

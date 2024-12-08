@@ -54,7 +54,7 @@ router.post('/search', async (req, res) => {
 
 // Route to render Airbnb details
 // Add this route in airbnbRoutes.js
-router.get('/detail/:id',
+router.get('/detail/:id',protect,
   
   
   async (req, res) => {

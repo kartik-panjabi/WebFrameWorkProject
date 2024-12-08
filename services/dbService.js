@@ -83,7 +83,17 @@ getAllAirBnBs: async (page, perPage, filter) => {
   // Delete an AirBnB by ID
   deleteAirBnBById: async (Id) => {
     return await AirBnB.findByIdAndDelete(Id);
-  }
+  },
+
+   // get Airbnb by filter 
+   find : async (filter) => {
+      // sort ascending order filter
+
+      return await AirBnB.find(filter).sort({ price : 1}).limit(10);
+   }
+
 };
 
+
+ 
 module.exports = db;

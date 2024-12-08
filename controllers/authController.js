@@ -22,7 +22,8 @@ const registerUser = async (req, res) => {
         await newUser.save();
 
         // Send success response
-        res.status(201).json({ message: 'User registered successfully' });
+        res.redirect('/login', { message: 'User registered successfully' });
+       
     } catch (err) {
         res.status(500).json({ message: 'Error registering user', error: err.message });
     }
@@ -31,53 +32,58 @@ const registerUser = async (req, res) => {
 
 // Login existing user and generate JWT
 const loginUser = async (req, res) => {
-    const { username, password } = req.body;
+        const { username, password } = req.body;
 
-    console.log('Login request received:', req.body);
+        console.log('Login request received:', req.body);
 
-    try {
-        // Check if the user exists
-        const user = await User.findOne({ username });
-        console.log('User found in database:', user);
+        try {
+            // Check if the user exists
+            const user = await User.findOne({ username });
+            console.log('User found in database:', user);
 
-        if (!user) {
-            console.warn('User not found');
-            return res.status(400).json({ message: 'Invalid credentials' });
+            if (!user) {
+                console.warn('User not found');
+                return res.status(400).redirect('/error',{ message: 'User not found' });
+            }
+
+            // Compare passwords
+            const isMatch = await bcrypt.compare(password, user.password);
+            console.log('Password match:', isMatch);
+
+            if (!isMatch) {
+                console.warn('Password did not match');
+                return res.status(400).redirect('./',{ message: 'Invalid credentials' });
+            }
+
+            // Generate JWT token
+            const token = jwt.sign(
+                { id: user._id, username: user.username },
+                process.env.JWT_SECRET,
+                { expiresIn: '1h' }
+            );
+            console.log('Generated JWT:', token);
+
+
+            // Send token back to the client
+            // Option 1: Send as a cookie (more secure)
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+                sameSite: 'Strict',
+            });
+
+             res.setHeader('Authorization', `Bearer ${token}`);
+            // Redirect to protected route
+            res.status(200);
+            res.redirect(`/listings?message=${encodeURIComponent('Login successful')}`);
+
+        
+        } catch (err) {
+            console.error('Error logging in user:', err.message);
+            res.status(500);
+            res.redirect(`/error?message=${encodeURIComponent('Error logging in user')}`);
+
         }
-
-        // Compare passwords
-        const isMatch = await bcrypt.compare(password, user.password);
-        console.log('Password match:', isMatch);
-
-        if (!isMatch) {
-            console.warn('Password did not match');
-            return res.status(400).redirect('./',{ message: 'Invalid credentials' });
-        }
-
-        // Generate JWT token
-        const token = jwt.sign(
-            { id: user._id, username: user.username },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
-        );
-        console.log('Generated JWT:', token);
-
-
-        // Send token back to the client
-          // Option 1: Send as a cookie (more secure)
-          res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-            sameSite: 'Strict',
-        });
-
-        // Redirect to protected route
-        res.redirect('/', { message: 'Login successful' });
-       
-    } catch (err) {
-        console.error('Error logging in user:', err.message);
-        res.redirect('/error', { message: 'Error logging in user' });
-    }
-};
+    };
 
 module.exports = { registerUser, loginUser };

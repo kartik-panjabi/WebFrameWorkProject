@@ -4,6 +4,12 @@ const protect = async (req, res, next) => {
 
     console.log('Protect Middleware Triggered');
 
+    // Log cookies and Authorization header to see what you're getting in the request
+    console.log('Cookies: ', req.cookies);
+    console.log('Authorization Header: ', req.headers.authorization);
+
+    
+
     // Check if the Authorization header is present and starts with "Bearer"
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         console.log('Authorization header found:', req.headers.authorization);

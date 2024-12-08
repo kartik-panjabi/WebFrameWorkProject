@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
+  <%- include('partials/header') %>
+
   <div class="login-container">
     <h1>Login</h1>
     <form action="/api/users/login" method="POST" class="login-form">
@@ -26,5 +28,7 @@
       </div>
     </form>
   </div>
+
+  <%- include ('partials/footer') %>
 </body>
 </html>
