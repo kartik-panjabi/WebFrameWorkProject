@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listings</title>
+</head>
+<body>
+    <h1>Search and Filter Listings</h1>
+
+    <form action="/api/listings" method="get">
+        <label for="min_price">Min Price:</label>
+        <input type="number" id="min_price" name="min_price" min="0"><br><br>
+
+        <label for="max_price">Max Price:</label>
+        <input type="number" id="max_price" name="max_price" min="0"><br><br>
+
+        <label for="type">Type:</label>
+        <select id="type" name="type">
+            <option value="">Any</option>
+            <option value="room">Room</option>
+            <option value="entire home">Entire Home</option>
+        </select><br><br>
+
+        <button type="submit">Search</button>
+    </form>
+    
+    <!-- Display Listings -->
+    <h2>Results</h2>
+    <div>
+        <% airbnbs.forEach(airbnb => { %>
+            <div>
+                <h3><%= airbnb.name %></h3>
+                <p>Price: $<%= airbnb.price %> per night</p>
+                <p>Type: <%= airbnb.type %></p>
+                <p><%= airbnb.description %></p>
+            </div>
+        <% }) %>
+    </div>
+</body>
+</html>
