@@ -14,6 +14,8 @@ const userRoutes = require('./routes/authRoutes');
 const errorRoutes = require('./routes/errorRoutes');
 
 
+
+
 const multer = require('multer');
 const upload = multer();
 const app = express();
@@ -46,7 +48,16 @@ app.use('/api/AirBnBs', airbnbRoutes);
 
 app.use('/api/users', userRoutes);
 
+const bodyParser = require("body-parser");
+const qs = require("qs");
 
+app.use(bodyParser.urlencoded({
+    extended: true,
+    parameterLimit: 10000,
+    limit: '10mb',
+    extended: true,
+    type: (req) => qs.parse(req.body),
+}));
 
 // last route error routes: 
 app.use('/', errorRoutes);

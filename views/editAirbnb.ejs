@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
+  <%- include('partials/header') %>
   <h1>Edit Airbnb Listing</h1>
   <form action="/api/AirBnBs/edit/<%= airbnb._id %>" method="POST" class="formEdit">
     <div class="form-group">

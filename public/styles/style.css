@@ -488,3 +488,18 @@ margin: 0;
 font-size: 14px;
 font-weight: bold;
 }
+
+
+/* inline Form */
+.form-inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.form-inline label, 
+.form-inline input, 
+.form-inline select, 
+.form-inline button {
+  margin: 0;
+}

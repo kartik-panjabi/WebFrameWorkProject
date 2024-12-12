@@ -1,0 +1,83 @@
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Listing</title>
+    <link rel="stylesheet" href="/styles/form.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add a New Listing</h1>
+        <form action="/api/AirBnBs/addListing" method="POST">
+            <!-- Basic Details -->
+            <div class="form-group">
+                <label for="_id">Listing ID:</label>
+                <input type="text" id="id" name="_id" required>
+            </div>
+
+            <div class="form-group">
+                <label for="name">Listing Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="listing_url">Listing URL:</label>
+                <input type="url" id="listing_url" name="listing_url">
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price (per night):</label>
+                <input type="number" id="price" name="price" min="1" required>
+            </div>
+
+            <!-- Host Details -->
+            <h3>Host Details</h3>
+            <div class="form-group">
+                <label for="host_id">Host ID:</label>
+                <input type="text" id="host_id" name="host.host_id" required>
+            </div>
+
+            <div class="form-group">
+                <label for="host_name">Host Name:</label>
+                <input type="text" id="host_name" name="host.host_name">
+            </div>
+
+            <div class="form-group">
+                <label for="host_url">Host URL:</label>
+                <input type="url" id="host_url" name="host.host_url">
+            </div>
+
+            <div class="form-group">
+                <label for="host_is_superhost">Is Superhost:</label>
+                <select id="host_is_superhost" name="host.host_is_superhost" required>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+
+            <!-- Address -->
+            <h3>Address</h3>
+            <div class="form-group">
+                <label for="coordinates">Coordinates (Latitude, Longitude):</label>
+                <input type="text" id="coordinates" name="address.location.coordinates" placeholder="e.g., 40.69791, -73.93615" required>
+             </div>
+
+            <div class="form-group">
+                <label for="street">Street:</label>
+                <input type="text" id="street" name="address.street">
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="address.country">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Add Listing</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -2,11 +2,23 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { protect } = require('../middlewares/authMiddleware');
 const db = require('../services/dbService'); // Ensure dbService is correctly implemented
+const AirBnB = require('../models/airbnbModel');
 const router = express.Router();
+const isLoggedIn = require('../middlewares/isLoggedIn');
+const isAdmin = require('../middlewares/isAdmin');
 
+
+/// checking admin route
+router.use('/admin',isLoggedIn,isAdmin , (req, res) => {
+  res.json({ message: 'Access granted to protected route', user: req.user });
+});
 
 
 //////////////////////////////////NEW ROUTES FOR UI///////////////////////////////////////////
+
+
+
+
 
 
 // Route to serve the form
@@ -54,7 +66,7 @@ router.post('/search', async (req, res) => {
 
 // Route to render Airbnb details
 // Add this route in airbnbRoutes.js
-router.get('/detail/:id',protect,
+router.get('/detail/:id',isLoggedIn,
   
   
   async (req, res) => {
@@ -77,7 +89,7 @@ router.get('/detail/:id',protect,
 });
 
 // GET /api/AirBnBs/edit/:id - Render the edit form for an AirBnB by ID
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id', isLoggedIn, isAdmin,async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -110,7 +122,7 @@ router.post('/edit/:id', async (req, res) => {
 
     if (updatedAirbnb) {
       // Redirect back to the listings page or success page
-      res.redirect('/search?message=AirBnB updated successfully&page=1&perPage=5'); // Adjust the path as needed
+      res.redirect('/search?message=AirBnB%20updated%20successfully&page=1&perPage=5'); // Adjust the path as needed
     } else {
       res.status(404).send('AirBnB not found');
     }
@@ -190,6 +202,85 @@ router.get('/', async (req, res) => {
       res.status(500).json({ message: 'Error fetching AirBnBs', error });
     }
   });
+
+
+
+  //
+  router.get('/addListing', (req,res) => {
+    res.render('form');
+
+  });
+
+ 
+
+  // post addListing
+  router.post("/addListing", async (req, res) => {
+
+    
+        
+    try {
+      console.log("Incoming data:", req.body);
+
+      // Extract flat fields
+      const {
+          _id,
+          name,
+          listing_url,
+          price,
+          'host.host_id': host_id,
+          'host.host_name': host_name,
+          'host.host_url': host_url,
+          'host.host_is_superhost': host_is_superhost,
+          'address.location.coordinates': coordinates,
+          'address.street': street,
+          'address.country': country,
+      } = req.body;
+
+      // Construct nested fields
+      const parsedHost = {
+          host_id,
+          host_name,
+          host_url,
+          host_is_superhost: host_is_superhost === "true", // Convert to boolean
+      };
+
+      const parsedAddress = {
+          location: {
+              type: "Point",
+              coordinates: coordinates.split(",").map(Number), // Parse coordinates
+          },
+          street,
+          country,
+      };
+
+      // Ensure coordinates are valid
+      if (parsedAddress.location.coordinates.length !== 2 || parsedAddress.location.coordinates.some(isNaN)) {
+          throw new Error("Invalid coordinates. Must provide latitude and longitude separated by a comma.");
+      }
+
+      const jsonData = JSON.stringify(req.body);
+      console.log(jsonData);
+      // Construct the new listing
+      const newListing = new AirBnB({
+          _id,
+          name,
+          listing_url,
+          price: parseFloat(price), // Convert price to number
+          host: parsedHost,
+          address: parsedAddress,
+      });
+
+      // Save to MongoDB
+      await newListing.save();
+      res.send("Listing added successfully!");
+  } catch (error) {
+      console.error("Error adding AirBnB:", error);
+      res.status(500).send("Error adding AirBnB: " + error.message);
+  }
+
+});
+
+
   
 // GET /api/AirBnBs/fees/:id
 router.get('/fees/:id', async (req, res) => {

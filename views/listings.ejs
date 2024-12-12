@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+
     <title>Listings</title>
 </head>
 <body>
+    <%- include('partials/header') %>
+
     <h1>Search and Filter Listings</h1>
 
-    <form action="/listings" method="get">
+    <form action="/listings" method="get" class="form-inline">
         <label for="min_price">Min Price:</label>
         <input type="number" id="min_price" name="min_price" min="0"><br><br>
 
@@ -18,8 +22,9 @@
         <label for="type">Type:</label>
         <select id="type" name="type">
             <option value="">Any</option>
-            <option value="room">Room</option>
-            <option value="entire home">Entire Home</option>
+            <option value="House">House</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Condominium">Condominium</option>
         </select><br><br>
 
         <button type="submit">Search</button>
@@ -32,7 +37,7 @@
             <div>
                 <h3><%= airbnb.name %></h3>
                 <p>Price: $<%= airbnb.price %> per night</p>
-                <p>Type: <%= airbnb.type %></p>
+                <p>Type: <%= airbnb.property_type %></p>
                 <p><%= airbnb.description %></p>
             </div>
         <% }) %>

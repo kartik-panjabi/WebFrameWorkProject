@@ -39,7 +39,8 @@ getAllAirBnBs: async (page, perPage, filter) => {
 
   // Get an AirBnB by ID
   getAirBnBById: async (Id) => {
-    return await AirBnB.findOne({ _id: Id });
+    console.log(Id);
+    return await AirBnB.findById(Id);
   },
 
   

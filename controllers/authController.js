@@ -7,14 +7,14 @@ const registerUser = async (req, res) => {
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
-        return res.status(400).json({ message: 'Please provide all required fields (username, email, password).' });
+        return res.status(400).redirect('/error?message=Please%20provide%20all%20required%20fields%20(username%2C%20email%2C%20password).');
     }
 
     try {
         // Check if the user already exists with the same username or email
         const existingUser = await User.findOne({ $or: [{ username }, { email }] });
         if (existingUser) {
-            return res.status(400).json({ message: 'User already exists with this username or email' });
+            return res.status(400).redirect('/error?message=User%20already%20exists%20with%20this%20username%20or%20email');
         }
 
         // Create a new user (do not hash the password here)
@@ -22,10 +22,10 @@ const registerUser = async (req, res) => {
         await newUser.save();
 
         // Send success response
-        res.redirect('/login', { message: 'User registered successfully' });
+        res.status(201).redirect('/api/users/login?message=User%20registered%20successfully');
        
     } catch (err) {
-        res.status(500).json({ message: 'Error registering user', error: err.message });
+        res.redirect('/error?message=' + encodeURIComponent('Error registering user: ' + err.message));
     }
 };
 
@@ -55,9 +55,11 @@ const loginUser = async (req, res) => {
                 return res.status(400).redirect('./',{ message: 'Invalid credentials' });
             }
 
+            const role = username === 'kp123456' ? 'admin' : 'user';
+
             // Generate JWT token
             const token = jwt.sign(
-                { id: user._id, username: user.username },
+                { id: user._id, username: user.username, role },
                 process.env.JWT_SECRET,
                 { expiresIn: '1h' }
             );
